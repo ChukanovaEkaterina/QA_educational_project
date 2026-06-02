@@ -44,4 +44,23 @@ public class RegistrationTests extends TestBase {
         $(".table-hover").shouldHave(text("Rajasthan"));
         $(".table-hover").shouldHave(text("Jaipur"));
     }
+
+    @Test
+    void requiredFieldsRegistrationTest() {
+        open("/automation-practice-form");
+
+        $("#firstName").setValue("Katya");
+        $("#lastName").setValue("Chukanova");
+        $("#gender-radio-2").click();
+        $("#userNumber").setValue("1234512345");
+        $("#submit").click();
+
+        $("#example-modal-sizes-title-lg").shouldHave(text("Thanks for submitting the form"));
+        $(".table-hover").shouldHave(text("Katya Chukanova"));
+        $(".table-hover").shouldHave(text("Female"));
+        $(".table-hover").shouldHave(text("1234512345"));
+    }
 }
+
+
+
