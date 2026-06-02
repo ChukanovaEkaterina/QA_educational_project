@@ -102,6 +102,21 @@ public class RegistrationTests extends TestBase {
         $("#firstName").shouldHave(cssValue("border-color", "rgb(220, 53, 69)"));
         $(".table-hover").shouldNotBe(visible);
     }
+
+    @Test
+    void allInputFieldsEmptyTest() {
+        open("/automation-practice-form");
+
+        $("#submit").click();
+
+        $("#firstName").shouldHave(cssValue("border-color", "rgb(220, 53, 69)"));
+        $("#lastName").shouldHave(cssValue("border-color", "rgb(220, 53, 69)"));
+        $("[name=gender][value=Male]").shouldHave(cssValue("border-color", "rgb(220, 53, 69)"));
+        $("[name=gender][value=Female]").shouldHave(cssValue("border-color", "rgb(220, 53, 69)"));
+        $("[name=gender][value=Other]").shouldHave(cssValue("border-color", "rgb(220, 53, 69)"));
+        $("#userNumber").shouldHave(cssValue("border-color", "rgb(220, 53, 69)"));
+        $(".table-hover").shouldNotBe(visible);
+    }
 }
 
 
