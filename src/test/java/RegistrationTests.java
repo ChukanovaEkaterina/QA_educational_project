@@ -3,8 +3,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.files.DownloadActions.click;
 
@@ -73,9 +72,25 @@ public class RegistrationTests extends TestBase {
         $("#userNumber").setValue("1234512345");
         $("#submit").click();
 
+        $("#userEmail").shouldHave(cssValue("border-color", "rgb(220, 53, 69)"));
+        $(".table-hover").shouldNotBe(visible);
+    }
+
+    @Test
+    void invalidShortUserNumberTest() {
+        open("/automation-practice-form");
+
+        $("#firstName").setValue("Katya");
+        $("#lastName").setValue("Chukanova");
+        $("#gender-radio-2").click();
+        $("#userNumber").setValue("111");
+        $("#submit").click();
+
+        $("#userNumber").shouldHave(cssValue("border-color", "rgb(220, 53, 69)"));
         $(".table-hover").shouldNotBe(visible);
     }
 }
+
 
 
 
