@@ -89,6 +89,19 @@ public class RegistrationTests extends TestBase {
         $("#userNumber").shouldHave(cssValue("border-color", "rgb(220, 53, 69)"));
         $(".table-hover").shouldNotBe(visible);
     }
+
+    @Test
+    void noRequiredfieldFirstNameTest() {
+        open("/automation-practice-form");
+
+        $("#lastName").setValue("Chukanova");
+        $("#gender-radio-2").click();
+        $("#userNumber").setValue("1234512345");
+        $("#submit").click();
+
+        $("#firstName").shouldHave(cssValue("border-color", "rgb(220, 53, 69)"));
+        $(".table-hover").shouldNotBe(visible);
+    }
 }
 
 
