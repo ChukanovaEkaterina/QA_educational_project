@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.files.DownloadActions.click;
 
@@ -59,6 +60,20 @@ public class RegistrationTests extends TestBase {
         $(".table-hover").shouldHave(text("Katya Chukanova"));
         $(".table-hover").shouldHave(text("Female"));
         $(".table-hover").shouldHave(text("1234512345"));
+    }
+
+    @Test
+    void invalidEmailTest() {
+        open("/automation-practice-form");
+
+        $("#firstName").setValue("Katya");
+        $("#lastName").setValue("Chukanova");
+        $("#userEmail").setValue("Chukanova");
+        $("#gender-radio-2").click();
+        $("#userNumber").setValue("1234512345");
+        $("#submit").click();
+
+        $(".table-hover").shouldNotBe(visible);
     }
 }
 
