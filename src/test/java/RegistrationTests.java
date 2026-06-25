@@ -2,7 +2,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.byText;
@@ -87,20 +89,23 @@ public class RegistrationTests extends TestBase {
     }
 
     @Tag("Regression")
-    @DisplayName("Невалидное поле ввода userNumber")
-    @Test
-    void invalidShortUserNumberTest() {
+    @ParameterizedTest(name= "Невалидное значение {0} поля ввода userNumber")
+    @ValueSource (strings = {
+            "null", "0", "bobobo", "111"
+    })
+    void invalidShortUserNumberTest(String invalidNumber) {
         open("/automation-practice-form");
 
         $("#firstName").setValue("Katya");
         $("#lastName").setValue("Chukanova");
         $("#genterWrapper").$(byText("Female")).click();
-        $("#userNumber").setValue("111");
+        $("#userNumber").setValue(invalidNumber);
         $("#submit").click();
 
         $("#userNumber").shouldHave(cssValue("border-color", "rgb(220, 53, 69)"));
         $(".table-hover").shouldNotBe(visible);
     }
+
     @Tag("Regression")
     @DisplayName("Отсутствует обязательное поле ввода firstName")
     @Test
@@ -131,6 +136,28 @@ public class RegistrationTests extends TestBase {
         $("[name=gender][value=Other]").shouldHave(cssValue("border-color", "rgb(220, 53, 69)"));
         $("#userNumber").shouldHave(cssValue("border-color", "rgb(220, 53, 69)"));
         $(".table-hover").shouldNotBe(visible);
+    }
+
+    @Tag("Regression")
+    @ParameterizedTest(name = "Привязка телефона {2} к имени {0} и фамилии {1} при регистрации")
+    @CsvFileSource(
+            resources = "/test_data/linkingUserNumberFirstNameLastName.csv"
+    )
+
+    void linkingUserNumberFirstNameLastName(String firstName, String lastName,
+                                            String phoneNumber, String firstAndLastName) {
+        open("/automation-practice-form");
+
+        $("#firstName").setValue(firstName);
+        $("#lastName").setValue(lastName);
+        $("#genterWrapper").$(byText("Female")).click();
+        $("#userNumber").setValue(phoneNumber);
+        $("#submit").click();
+
+        $("#example-modal-sizes-title-lg").shouldHave(text("Thanks for submitting the form"));
+        $(".table-hover").shouldHave(text(firstAndLastName));
+        $(".table-hover").shouldHave(text("Female"));
+        $(".table-hover").shouldHave(text(phoneNumber));
     }
 }
 
