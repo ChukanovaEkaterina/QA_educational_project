@@ -7,11 +7,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-
-import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Selectors.byText;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.open;
 import static testdata.TestData.*;
 
 public class RegistrationTests extends TestBase {
