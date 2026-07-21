@@ -2,15 +2,19 @@ package pages;
 
 import com.codeborne.selenide.SelenideElement;
 import pages.components.CalendarComponent;
+import pages.components.ResultFormComponent;
 
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
+import static testdata.TestData.textSuccessfulRegistrationForm;
 
 
 public class RegistrationTestPage {
 
     CalendarComponent calendar = new CalendarComponent();
+    ResultFormComponent resultFormComponent = new ResultFormComponent();
 
    private final SelenideElement firstNameInput = $("#firstName");
    private final SelenideElement lastNameInput = $("#lastName");
@@ -22,10 +26,12 @@ public class RegistrationTestPage {
    private final SelenideElement hobbiesWrapperInput = $("#hobbiesWrapper");
    private final SelenideElement pictureUploadInput = $("#uploadPicture");
    private final SelenideElement currentAddressInput = $("#currentAddress");
-    private final SelenideElement stateInput = $("#state");
-    private final SelenideElement cityInput = $("#city");
-    private final SelenideElement stateCityWrapper = $("#stateCity-wrapper");
+   private final SelenideElement stateInput = $("#state");
+   private final SelenideElement cityInput = $("#city");
+   private final SelenideElement stateCityWrapper = $("#stateCity-wrapper");
    private final SelenideElement submitButton = $("#submit");
+   private final SelenideElement formModal = $("#example-modal-sizes-title-lg");
+   private final SelenideElement tableHover = $(".table-hover");
 
    public RegistrationTestPage openPage(){
        open("/automation-practice-form");
@@ -57,7 +63,6 @@ public class RegistrationTestPage {
         userNumberInput.setValue(value);
         return this;
    }
-
 
    public RegistrationTestPage setDateOfBirth(String day, String month, String year){
         dateOfBirthInput.click();
@@ -103,8 +108,44 @@ public class RegistrationTestPage {
         return this;
     }
 
-   public RegistrationTestPage Submit(){
+   public RegistrationTestPage submit(){
        submitButton.click();
        return this;
    }
+
+    public RegistrationTestPage chekFormModal(String value) {
+        formModal.shouldBe(visible);
+        formModal.shouldHave(text(value));
+        return this;
+    }
+
+    public RegistrationTestPage checkResult(String key, String value){
+        resultFormComponent.chekField(key,value);
+        return this;
+    }
+
+    public RegistrationTestPage notVisibleTableHover(){
+        tableHover.shouldNotBe(visible);
+        return this;
+    }
+
+    public RegistrationTestPage checkErrorUserNumber(){
+        userNumberInput.shouldHave(cssValue("border-color", "rgb(220, 53, 69)"));
+        return this;
+    }
+
+    public RegistrationTestPage checkErrorUserEmail(){
+        userEmailInput.shouldHave(cssValue("border-color", "rgb(220, 53, 69)"));
+        return this;
+    }
+
+    public RegistrationTestPage checkErrorFirstName(){
+        firstNameInput.shouldHave(cssValue("border-color", "rgb(220, 53, 69)"));
+        return this;
+    }
+
+    public RegistrationTestPage checkErrorLastName(){
+        lastNameInput.shouldHave(cssValue("border-color", "rgb(220, 53, 69)"));
+        return this;
+    }
 }

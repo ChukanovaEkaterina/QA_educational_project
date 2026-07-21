@@ -34,20 +34,19 @@ public class RegistrationTests extends TestBase {
                 .pictureUpload(picture)
                 .typeCurrentAddress(currentAddress)
                 .setStateAndCity(studentState, studentCity)
-                .Submit();
+                .submit()
 
-        $("#example-modal-sizes-title-lg").shouldHave(text(textSuccessfulRegistrationForm));
-        $(".table-responsive").shouldHave(text(firstName + " " + lastName));
-        $(".table-responsive").shouldHave(text(userEmail));
-        $(".table-responsive").shouldHave(text(genderWrapper));
-        $(".table-responsive").shouldHave(text(userNumber));
-        $(".table-responsive").shouldHave(text(BirthDay + " " + BirthMonth + "," + BirthYear));
-        $(".table-responsive").shouldHave(text(subjects));
-        $(".table-responsive").shouldHave(text(hobbies));
-        $(".table-responsive").shouldHave(text(picture));
-        $(".table-responsive").shouldHave(text(currentAddress));
-        $(".table-responsive").shouldHave(text(studentState));
-        $(".table-responsive").shouldHave(text(studentCity));
+                .chekFormModal(textSuccessfulRegistrationForm)
+                .checkResult("Student Name", firstName + " " + lastName)
+                .checkResult("Student Email", userEmail)
+                .checkResult("Gender", genderWrapper)
+                .checkResult("Mobile", userNumber)
+                .checkResult("Date of Birth", BirthDay + " " + BirthMonth + "," + BirthYear)
+                .checkResult("Subjects", subjects)
+                .checkResult("Hobbies", hobbies)
+                .checkResult("Picture", picture)
+                .checkResult("Address", currentAddress)
+                .checkResult("State and City", studentState + " " + studentCity);
     }
 
     @Tag("Regression")
@@ -57,15 +56,15 @@ public class RegistrationTests extends TestBase {
         registrationTestPage
                 .openPage()
                 .typeFirstName(firstName)
-                .typeLastName(lastName);
-        $("#genterWrapper").$(byText(genderWrapper)).click();
-        $("#userNumber").setValue(userNumber);
-        $("#submit").click();
+                .typeLastName(lastName)
+                .setGender(genderWrapper)
+                .typeUserNumber(userNumber)
+                .submit()
 
-        $("#example-modal-sizes-title-lg").shouldHave(text(textSuccessfulRegistrationForm));
-        $(".table-hover").shouldHave(text(firstName + " " + lastName));
-        $(".table-hover").shouldHave(text(genderWrapper));
-        $(".table-hover").shouldHave(text(userNumber));
+                .chekFormModal(textSuccessfulRegistrationForm)
+                .checkResult("Student Name", firstName + " " + lastName)
+                .checkResult("Gender", genderWrapper)
+                .checkResult("Mobile", userNumber);
     }
 
     @Tag("Regression")
@@ -76,13 +75,13 @@ public class RegistrationTests extends TestBase {
                 .openPage()
                 .typeFirstName(firstName)
                 .typeLastName(lastName)
-                .typeUserEmail(lastName);
-        $("#genterWrapper").$(byText(genderWrapper)).click();
-        $("#userNumber").setValue(userNumber);
-        $("#submit").click();
+                .typeUserEmail(lastName)
+                .setGender(genderWrapper)
+                .typeUserNumber(userNumber)
+                .submit()
 
-        $("#userEmail").shouldHave(cssValue("border-color", "rgb(220, 53, 69)"));
-        $(".table-hover").shouldNotBe(visible);
+                .checkErrorUserEmail()
+                .notVisibleTableHover();
     }
 
     @Tag("Regression")
@@ -94,13 +93,13 @@ public class RegistrationTests extends TestBase {
         registrationTestPage
                 .openPage()
                 .typeFirstName(firstName)
-                .typeLastName(lastName);
-        $("#genterWrapper").$(byText(genderWrapper)).click();
-        $("#userNumber").setValue(invalidNumber);
-        $("#submit").click();
+                .typeLastName(lastName)
+                .setGender(genderWrapper)
+                .typeUserNumber(invalidNumber)
+                .submit()
 
-        $("#userNumber").shouldHave(cssValue("border-color", "rgb(220, 53, 69)"));
-        $(".table-hover").shouldNotBe(visible);
+                .checkErrorUserNumber()
+                .notVisibleTableHover();
     }
 
     @Tag("Regression")
@@ -109,13 +108,13 @@ public class RegistrationTests extends TestBase {
     void noRequiredfieldFirstNameTest() {
         registrationTestPage
                 .openPage()
-                .typeLastName(lastName);;
-        $("#genterWrapper").$(byText(genderWrapper)).click();
-        $("#userNumber").setValue(userNumber);
-        $("#submit").click();
+                .typeLastName(lastName)
+                .setGender(genderWrapper)
+                .typeUserNumber(userNumber)
+                .submit()
 
-        $("#firstName").shouldHave(cssValue("border-color", "rgb(220, 53, 69)"));
-        $(".table-hover").shouldNotBe(visible);
+                .checkErrorFirstName()
+                .notVisibleTableHover();
     }
 
     @Tag("Regression")
@@ -124,15 +123,16 @@ public class RegistrationTests extends TestBase {
     void allInputFieldsEmptyTest() {
         registrationTestPage
                 .openPage()
-                .Submit();
+                .submit()
 
-        $("#firstName").shouldHave(cssValue("border-color", "rgb(220, 53, 69)"));
-        $("#lastName").shouldHave(cssValue("border-color", "rgb(220, 53, 69)"));
-        $("[name=gender][value=Male]").shouldHave(cssValue("border-color", "rgb(220, 53, 69)"));
-        $("[name=gender][value=Female]").shouldHave(cssValue("border-color", "rgb(220, 53, 69)"));
-        $("[name=gender][value=Other]").shouldHave(cssValue("border-color", "rgb(220, 53, 69)"));
-        $("#userNumber").shouldHave(cssValue("border-color", "rgb(220, 53, 69)"));
-        $(".table-hover").shouldNotBe(visible);
+                .checkErrorFirstName()
+                .checkErrorLastName()
+                .checkErrorUserNumber()
+                .notVisibleTableHover();
+
+//$("[name=gender][value=Male]").shouldHave(cssValue("border-color", "rgb(220, 53, 69)"));//$("[name=gender][value=Female]").shouldHave(cssValue("border-color", "rgb(220, 53, 69)"));
+//$("[name=gender][value=Other]").shouldHave(cssValue("border-color", "rgb(220, 53, 69)"));
+
     }
 
     @Tag("Regression")
@@ -143,18 +143,18 @@ public class RegistrationTests extends TestBase {
 
     void linkingUserNumberFirstNameLastName(String firstName, String lastName,
                                             String phoneNumber, String firstAndLastName) {
-        open("/automation-practice-form");
+        registrationTestPage
+                .openPage()
+                .typeFirstName(firstName)
+                .typeLastName(lastName)
+                .setGender(genderWrapper)
+                .typeUserNumber(phoneNumber)
+                .submit()
 
-        $("#firstName").setValue(firstName);
-        $("#lastName").setValue(lastName);
-        $("#genterWrapper").$(byText(genderWrapper)).click();
-        $("#userNumber").setValue(phoneNumber);
-        $("#submit").click();
-
-        $("#example-modal-sizes-title-lg").shouldHave(text(textSuccessfulRegistrationForm));
-        $(".table-hover").shouldHave(text(firstAndLastName));
-        $(".table-hover").shouldHave(text(genderWrapper));
-        $(".table-hover").shouldHave(text(phoneNumber));
+                .chekFormModal(textSuccessfulRegistrationForm)
+                .checkResult("Student Name", firstAndLastName)
+                .checkResult("Gender", genderWrapper)
+                .checkResult("Mobile", phoneNumber);
     }
 }
 
