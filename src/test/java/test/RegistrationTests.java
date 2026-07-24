@@ -130,6 +130,10 @@ public class RegistrationTests extends TestBase {
                 .checkErrorLastName()
                 .checkErrorUserNumber()
                 .notVisibleTableHover();
+
+//$("[name=gender][value=Male]").shouldHave(cssValue("border-color", "rgb(220, 53, 69)"));//$("[name=gender][value=Female]").shouldHave(cssValue("border-color", "rgb(220, 53, 69)"));
+//$("[name=gender][value=Other]").shouldHave(cssValue("border-color", "rgb(220, 53, 69)"));
+
     }
 
     @Tag("Regression")
