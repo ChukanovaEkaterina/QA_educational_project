@@ -13,7 +13,7 @@ public class TestBase {
 
     @BeforeAll
     static void setupEnvironment(){
-        Configuration.browserSize = "1920x1280";
+        Configuration.browserSize = "1920x1080";
         Configuration.baseUrl = "https://demoqa.com";
     }
 

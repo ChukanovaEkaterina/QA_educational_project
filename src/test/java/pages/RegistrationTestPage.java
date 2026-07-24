@@ -6,8 +6,7 @@ import pages.components.ResultFormComponent;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.byText;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.*;
 
 public class RegistrationTestPage {
 
@@ -35,6 +34,11 @@ public class RegistrationTestPage {
        open("/automation-practice-form");
        return this;
    }
+
+    public RegistrationTestPage scrollHeight() {
+        executeJavaScript("window.scrollTo(0, document.body.scrollHeight)");
+        return this;
+    }
 
    public RegistrationTestPage typeFirstName(String value){
         firstNameInput.setValue(value);

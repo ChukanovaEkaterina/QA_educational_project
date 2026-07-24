@@ -18,6 +18,7 @@ public class RegistrationTests extends TestBase {
     void successfulRegistrationTest() {
         registrationTestPage
                 .openPage()
+                .scrollHeight()
                 .typeFirstName(firstName)
                 .typeLastName(lastName)
                 .typeUserEmail(userEmail)
@@ -50,6 +51,7 @@ public class RegistrationTests extends TestBase {
     void requiredFieldsRegistrationTest() {
         registrationTestPage
                 .openPage()
+                .scrollHeight()
                 .typeFirstName(firstName)
                 .typeLastName(lastName)
                 .setGender(genderWrapper)
@@ -68,6 +70,7 @@ public class RegistrationTests extends TestBase {
     void invalidEmailTest() {
         registrationTestPage
                 .openPage()
+                .scrollHeight()
                 .typeFirstName(firstName)
                 .typeLastName(lastName)
                 .typeUserEmail(lastName)
@@ -87,6 +90,7 @@ public class RegistrationTests extends TestBase {
     void invalidShortUserNumberTest(String invalidNumber) {
         registrationTestPage
                 .openPage()
+                .scrollHeight()
                 .typeFirstName(firstName)
                 .typeLastName(lastName)
                 .setGender(genderWrapper)
@@ -103,6 +107,7 @@ public class RegistrationTests extends TestBase {
     void noRequiredfieldFirstNameTest() {
         registrationTestPage
                 .openPage()
+                .scrollHeight()
                 .typeLastName(lastName)
                 .setGender(genderWrapper)
                 .typeUserNumber(userNumber)
@@ -118,16 +123,13 @@ public class RegistrationTests extends TestBase {
     void allInputFieldsEmptyTest() {
         registrationTestPage
                 .openPage()
+                .scrollHeight()
                 .submit()
 
                 .checkErrorFirstName()
                 .checkErrorLastName()
                 .checkErrorUserNumber()
                 .notVisibleTableHover();
-
-//$("[name=gender][value=Male]").shouldHave(cssValue("border-color", "rgb(220, 53, 69)"));//$("[name=gender][value=Female]").shouldHave(cssValue("border-color", "rgb(220, 53, 69)"));
-//$("[name=gender][value=Other]").shouldHave(cssValue("border-color", "rgb(220, 53, 69)"));
-
     }
 
     @Tag("Regression")
@@ -140,6 +142,7 @@ public class RegistrationTests extends TestBase {
                                             String phoneNumber, String firstAndLastName) {
         registrationTestPage
                 .openPage()
+                .scrollHeight()
                 .typeFirstName(firstName)
                 .typeLastName(lastName)
                 .setGender(genderWrapper)
