@@ -6,43 +6,46 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.params.provider.ValueSource;
+import testdata.TestData;
 
-import static testdata.TestData.*;
 
 public class RegistrationTests extends TestBase {
 
-
+    TestData testData = new TestData();
 
     @Test
     @DisplayName("Успешная регистрация при вводе всех полей валидными данными")
     void successfulRegistrationTest() {
+
+        TestData testData = new TestData();
+
         registrationTestPage
                 .openPage()
                 .scrollHeight()
-                .typeFirstName(firstName)
-                .typeLastName(lastName)
-                .typeUserEmail(userEmail)
-                .setGender(genderWrapper)
-                .typeUserNumber(userNumber)
-                .setDateOfBirth(BirthDay, BirthMonth, BirthYear)
-                .setSubjects(subjects)
-                .setHobbies(hobbies)
-                .pictureUpload(picture)
-                .typeCurrentAddress(currentAddress)
-                .setStateAndCity(studentState, studentCity)
+                .typeFirstName(testData.firstName)
+                .typeLastName(testData.lastName)
+                .typeUserEmail(testData.userEmail)
+                .setGender(testData.genderWrapper)
+                .typeUserNumber(testData.userNumber)
+                .setDateOfBirth(testData.BirthDay, testData.BirthMonth, testData.BirthYear)
+                .setSubjects(testData.subjects)
+                .setHobbies(testData.hobbies)
+                .pictureUpload(testData.picture)
+                .typeCurrentAddress(testData.currentAddress)
+                .setStateAndCity(testData.state, testData.city)
                 .submit()
 
-                .chekFormModal(textSuccessfulRegistrationForm)
-                .checkResult("Student Name", firstName + " " + lastName)
-                .checkResult("Student Email", userEmail)
-                .checkResult("Gender", genderWrapper)
-                .checkResult("Mobile", userNumber)
-                .checkResult("Date of Birth", BirthDay + " " + BirthMonth + "," + BirthYear)
-                .checkResult("Subjects", subjects)
-                .checkResult("Hobbies", hobbies)
-                .checkResult("Picture", picture)
-                .checkResult("Address", currentAddress)
-                .checkResult("State and City", studentState + " " + studentCity);
+                .chekFormModal(testData.textSuccessfulRegistrationForm)
+                .checkResult("Student Name", testData.firstName + " " + testData.lastName)
+                .checkResult("Student Email", testData.userEmail)
+                .checkResult("Gender", testData.genderWrapper)
+                .checkResult("Mobile", testData.userNumber)
+                .checkResult("Date of Birth", testData.BirthDay + " " + testData.BirthMonth + "," + testData.BirthYear)
+                .checkResult("Subjects", testData.subjects)
+                .checkResult("Hobbies", testData.hobbies)
+                .checkResult("Picture", testData.picture)
+                .checkResult("Address", testData.currentAddress)
+                .checkResult("State and City", testData.state + " " + testData.city);
     }
 
     @Tag("Regression")
@@ -52,16 +55,16 @@ public class RegistrationTests extends TestBase {
         registrationTestPage
                 .openPage()
                 .scrollHeight()
-                .typeFirstName(firstName)
-                .typeLastName(lastName)
-                .setGender(genderWrapper)
-                .typeUserNumber(userNumber)
+                .typeFirstName(testData.firstName)
+                .typeLastName(testData.lastName)
+                .setGender(testData.genderWrapper)
+                .typeUserNumber(testData.userNumber)
                 .submit()
 
-                .chekFormModal(textSuccessfulRegistrationForm)
-                .checkResult("Student Name", firstName + " " + lastName)
-                .checkResult("Gender", genderWrapper)
-                .checkResult("Mobile", userNumber);
+                .chekFormModal(testData.textSuccessfulRegistrationForm)
+                .checkResult("Student Name", testData.firstName + " " + testData.lastName)
+                .checkResult("Gender", testData.genderWrapper)
+                .checkResult("Mobile", testData.userNumber);
     }
 
     @Tag("Regression")
@@ -71,11 +74,11 @@ public class RegistrationTests extends TestBase {
         registrationTestPage
                 .openPage()
                 .scrollHeight()
-                .typeFirstName(firstName)
-                .typeLastName(lastName)
-                .typeUserEmail(lastName)
-                .setGender(genderWrapper)
-                .typeUserNumber(userNumber)
+                .typeFirstName(testData.firstName)
+                .typeLastName(testData.lastName)
+                .typeUserEmail(testData.lastName)
+                .setGender(testData.genderWrapper)
+                .typeUserNumber(testData.userNumber)
                 .submit()
 
                 .checkErrorUserEmail()
@@ -91,9 +94,9 @@ public class RegistrationTests extends TestBase {
         registrationTestPage
                 .openPage()
                 .scrollHeight()
-                .typeFirstName(firstName)
-                .typeLastName(lastName)
-                .setGender(genderWrapper)
+                .typeFirstName(testData.firstName)
+                .typeLastName(testData.lastName)
+                .setGender(testData.genderWrapper)
                 .typeUserNumber(invalidNumber)
                 .submit()
 
@@ -108,9 +111,9 @@ public class RegistrationTests extends TestBase {
         registrationTestPage
                 .openPage()
                 .scrollHeight()
-                .typeLastName(lastName)
-                .setGender(genderWrapper)
-                .typeUserNumber(userNumber)
+                .typeLastName(testData.lastName)
+                .setGender(testData.genderWrapper)
+                .typeUserNumber(testData.userNumber)
                 .submit()
 
                 .checkErrorFirstName()
@@ -130,10 +133,6 @@ public class RegistrationTests extends TestBase {
                 .checkErrorLastName()
                 .checkErrorUserNumber()
                 .notVisibleTableHover();
-
-//$("[name=gender][value=Male]").shouldHave(cssValue("border-color", "rgb(220, 53, 69)"));//$("[name=gender][value=Female]").shouldHave(cssValue("border-color", "rgb(220, 53, 69)"));
-//$("[name=gender][value=Other]").shouldHave(cssValue("border-color", "rgb(220, 53, 69)"));
-
     }
 
     @Tag("Regression")
@@ -149,13 +148,13 @@ public class RegistrationTests extends TestBase {
                 .scrollHeight()
                 .typeFirstName(firstName)
                 .typeLastName(lastName)
-                .setGender(genderWrapper)
+                .setGender(testData.genderWrapper)
                 .typeUserNumber(phoneNumber)
                 .submit()
 
-                .chekFormModal(textSuccessfulRegistrationForm)
+                .chekFormModal(testData.textSuccessfulRegistrationForm)
                 .checkResult("Student Name", firstAndLastName)
-                .checkResult("Gender", genderWrapper)
+                .checkResult("Gender", testData.genderWrapper)
                 .checkResult("Mobile", phoneNumber);
     }
 }
