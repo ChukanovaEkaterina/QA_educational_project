@@ -42,6 +42,13 @@ public class TestBase {
             remoteUrl = "https://user1:1234@selenoid.qa.guru/wd/hub";
         }
         Configuration.remote = remoteUrl;
+
+        System.out.println("baseUrl: " + Configuration.baseUrl);
+        System.out.println("browser: " + Configuration.browser);
+        System.out.println("browserSize: " + Configuration.browserSize);
+        System.out.println("browserVersion: " + Configuration.browserVersion);
+        System.out.println("headless: " + Configuration.headless);
+        System.out.println("remoteUrl: " + remoteUrl);
     }
 
     @AfterEach
