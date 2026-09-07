@@ -15,7 +15,7 @@ public class TestData {
             "January", "February", "March", "April", "May", "June",
             "July", "August", "September", "October", "November", "December");
     public  String BirthYear = String.valueOf(faker.number().numberBetween(1960, 2015));;
-    public  String BirthDay = String.valueOf(faker.number().numberBetween(1, 30));
+    public  String BirthDay = String.valueOf(faker.number().numberBetween(1, 28));
     public  String picture = "photo.jpg";
     public  String subjects = faker.options().option(
 "Art", "Civics", "History", "Social Studies", "Economics", "Accounting", "Commerce",
